@@ -1,6 +1,24 @@
 #include <iostream>
-OTRA PRUEBA PQ PONE MI CUENTA PERSONAL AAAAAAAA
-ya no se que poner, ayuda profe
+#include <fstream>
 int main() {
+
+    std::string nombreArchivo = "atletas.txt";
+    std::ifstream archivo(nombreArchivo);
+    int pepito = 0;
+
+    if (!archivo.is_open()) {
+        std::ofstream nuevoArchivo(nombreArchivo);
+        nuevoArchivo << "Nombre,Pais,Disciplina,Genero,Medallas\n";
+        nuevoArchivo.close();
+    } else {
+        std::string linea;
+        while (std::getline(archivo, linea)) {
+            if (!linea.empty()) {
+                pepito++;
+            }
+        }
+        archivo.close();
+    }
+
     return 0;
 }
