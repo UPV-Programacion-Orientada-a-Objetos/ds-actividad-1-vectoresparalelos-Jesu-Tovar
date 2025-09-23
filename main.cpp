@@ -67,6 +67,76 @@ void buscarAtleta() {
     in.close();
 }
 
+void medallasPorPais() {
+    std::string paisBuscar;
+    std::cout << "Pais: ";
+    std::getline(std::cin, paisBuscar);
+
+    std::ifstream in(nombreArchivo);
+    std::string linea;
+    std::getline(in, linea);
+    int total = 0;
+
+    while (std::getline(in, linea)) {
+        std::stringstream ss(linea);
+        std::string nombre, pais, disciplina, genero, medStr;
+        std::getline(ss, nombre, ',');
+        std::getline(ss, pais, ',');
+        std::getline(ss, disciplina, ',');
+        std::getline(ss, genero, ',');
+        std::getline(ss, medStr, ',');
+
+        if (pais == paisBuscar) {
+            total += std::stoi(medStr);
+        }
+    }
+    in.close();
+    std::cout << "Total de medallas de " << paisBuscar << ": " << total << std::endl;
+}
+
+
+void mejorAtleta() {
+    std::ifstream in(nombreArchivo);
+    std::string linea;
+    std::getline(in, linea);
+
+    std::string mejorNombre;
+    int maxMedallas = -1;
+
+    while (std::getline(in, linea)) {
+        std::stringstream ss(linea);
+        std::string nombre, pais, disciplina, genero, medStr;
+        std::getline(ss, nombre, ',');
+        std::getline(ss, pais, ',');
+        std::getline(ss, disciplina, ',');
+        std::getline(ss, genero, ',');
+        std::getline(ss, medStr, ',');
+
+        int med = std::stoi(medStr);
+        if (med > maxMedallas) {
+            maxMedallas = med;
+            mejorNombre = nombre;
+        }
+    }
+    in.close();
+
+    if (maxMedallas >= 0)
+        std::cout << "El mejor atleta es " << mejorNombre 
+                  << " con " << maxMedallas << " medallas.\n";
+    else
+        std::cout << "No hay atletas registrados.\n";
+}
+
+void mostrarTodos() {
+    std::ifstream in(nombreArchivo);
+    std::string linea;
+    std::getline(in, linea);
+    std::cout << "--- Lista de atletas ---\n";
+    while (std::getline(in, linea)) {
+        std::cout << linea << std::endl;
+    }
+    in.close();
+}
 
 
 int main() {
@@ -80,6 +150,9 @@ int main() {
     switch (pepe) {
         case 1: registrarAtleta(); break;
         case 2: buscarAtleta(); break;
+        case 3: medallasPorPais(); break;
+        case 4: mejorAtleta(); break;
+        case 5: mostrarTodos(); break;
         case 6: std::cout << "Adios.\n"; break;
         default: std::cout << "Opcion incorrecta.\n"; break;
         }
