@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 
-std::string nombreArchivo = "atletas.txt";
+std::string nombreArchivo = "atletas.csv";
 
 void crearArchivo() {
     std::ifstream archivo(nombreArchivo);
@@ -32,8 +32,7 @@ void registrarAtleta() {
     std::cin.ignore();
 
     std::ofstream salida(nombreArchivo, std::ios::app);
-    salida << nombre << "," << pais << "," << disciplina << ","
-           << genero << "," << medallas << "\n";
+    salida << nombre << "," << pais << "," << disciplina << "," << genero << "," << medallas << "\n";
     salida.close();
 
     std::cout << "Atleta registrado.\n";
@@ -141,26 +140,31 @@ void mostrarTodos() {
 
 int main() {
     crearArchivo();
-    int pepe = 0;
+    int opcion = 0;
 
+    do {
+        std::cout << "----- M E N U ----- \n"
+                  << "1) Registrar \n"
+                  << "2) Buscar \n"
+                  << "3) Calcular medallas por pais \n"
+                  << "4) Mejor atleta \n"
+                  << "5) Mostrar todos \n"
+                  << "6) Salir\n"
+                  << "Seleccione una opcion: ";
+        std::cin >> opcion;
+        std::cin.ignore();
 
-    std::cout << "----- M E N U ----- \n1)Registrar \n2)Buscar \n3)Calcular medallas por pais \n4)Mejor atleta \n5)Mostrar todos \n6)Salir" << std::endl;
-    std::cin >> pepe;
-    std::cin.ignore();
-    switch (pepe) {
-        case 1: registrarAtleta(); break;
-        case 2: buscarAtleta(); break;
-        case 3: medallasPorPais(); break;
-        case 4: mejorAtleta(); break;
-        case 5: mostrarTodos(); break;
-        case 6: std::cout << "Adios.\n"; break;
-        default: std::cout << "Opcion incorrecta.\n"; break;
+        switch (opcion) {
+            case 1: registrarAtleta(); break;
+            case 2: buscarAtleta(); break;
+            case 3: medallasPorPais(); break;
+            case 4: mejorAtleta(); break;
+            case 5: mostrarTodos(); break;
+            case 6: std::cout << "Llegale we"; break;
+            default: std::cout << "Opcion incorrecta.\n"; break;
         }
 
-    while(pepe >= 7){
-        std::cout << "Opcion incorrecta, seleccione otra" << std::endl;
-        std::cin >> pepe;
-    }
-    
+    } while(opcion != 6);
+
     return 0;
-    }
+}
